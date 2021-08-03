@@ -1,11 +1,16 @@
-#include <iostream>
+#include "Engine.h"
 #include <SDL.h>
+#include <SDL_image.h>
+#include <iostream>
 
 int main(int, char**) {
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
+
+	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
 
 	SDL_Window* window = SDL_CreateWindow("GAT150", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
 	if (window == nullptr) {
@@ -14,8 +19,32 @@ int main(int, char**) {
 		return 1;
 	}
 
-	std::getchar();
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
+	std::cout << MAC::GetFilePath() << std::endl;
+	MAC::SetFilePath("../Resources");
+	std::cout << MAC::GetFilePath() << std::endl;
+
+	//load surface
+	SDL_Surface* surface = IMG_Load("sf2.png");
+	//create texture
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_FreeSurface(surface);
+
+	bool quit = false;
+	SDL_Event event;
+	while (!quit) {
+		SDL_WaitEvent(&event);
+		switch (event.type) {
+		case SDL_QUIT:
+			quit = true;
+			break;
+		}
+		SDL_RenderCopy(renderer, texture, NULL, NULL);
+		SDL_RenderPresent(renderer);
+	}
+	
+	IMG_Quit();
 	SDL_Quit();
 	return 0;
 }

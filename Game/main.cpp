@@ -5,46 +5,46 @@
 
 int main(int, char**) {
 
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-		return 1;
-	}
+	MAC::Engine engine;
+	engine.Startup();
 
-	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
-
-	SDL_Window* window = SDL_CreateWindow("GAT150", 100, 100, 800, 600, SDL_WINDOW_SHOWN);
-	if (window == nullptr) {
-		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return 1;
-	}
-
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+	engine.Get<MAC::Renderer>()->Create("GAT150", 800, 600);
 
 	std::cout << MAC::GetFilePath() << std::endl;
 	MAC::SetFilePath("../Resources");
 	std::cout << MAC::GetFilePath() << std::endl;
 
-	//load surface
-	SDL_Surface* surface = IMG_Load("sf2.png");
-	//create texture
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
+	std::shared_ptr<MAC::Texture> texture = engine.Get<MAC::ResourceSystem>()->Get<MAC::Texture>("sf2.png", engine.Get<MAC::Renderer>());
 
 	bool quit = false;
 	SDL_Event event;
 	while (!quit) {
-		SDL_WaitEvent(&event);
+		SDL_PollEvent(&event);
 		switch (event.type) {
 		case SDL_QUIT:
 			quit = true;
 			break;
 		}
-		SDL_RenderCopy(renderer, texture, NULL, NULL);
-		SDL_RenderPresent(renderer);
+
+		engine.Get<MAC::Renderer>()->BeginFrame();
+
+		MAC::Vector2 position{ 300,400 };
+		engine.Get<MAC::Renderer>()->Draw(texture, position);
+
+		engine.Get<MAC::Renderer>()->EndFrame();
+		
+
+		/*for (int i = 0; i < 2; i++) {
+
+			SDL_Rect src{ 32,64,32,64 };
+			SDL_Rect dest{ MAC::RandomIntRange(0,800),MAC::RandomIntRange(0,600), 64, 96};
+
+			SDL_RenderCopy(renderer, texture, &src, &dest);
+		}*/
+		
 	}
 	
-	IMG_Quit();
+	
 	SDL_Quit();
 	return 0;
 }

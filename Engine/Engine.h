@@ -3,11 +3,13 @@
 //core
 #include "Core/FileSystem.h"
 
-//systems
-#include "Audio/AudioSystem.h"
-
 //Framework
 #include "Framework/EventSystem.h"
+#include "Framework/System.h"
+
+//Graphics
+#include "Graphics/Renderer.h"
+#include "Graphics/Texture.h"
 
 //Math
 #include "Math/Vector2.h"

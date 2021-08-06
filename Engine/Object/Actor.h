@@ -8,17 +8,19 @@
 namespace MAC {
 
 	class Scene;
+	class Texture;
+	class Renderer;
 
 	class Actor : public Object {
 	public:
 
 		Actor() {}
-		Actor(const Transform& transform = {}) : transform{ transform } {}
+		Actor(const Transform& transform, std::shared_ptr<Texture> texture = {}) : transform{ transform }, texture{ texture } {}
 
 		virtual void Initialize();
 
 		virtual void Update(float dt);
-		virtual void Draw();
+		virtual void Draw(Renderer* renderer);
 
 		virtual void OnCollision(Actor* actor) {}
 		virtual void AddChild(std::unique_ptr<Actor> actor);
@@ -29,6 +31,8 @@ namespace MAC {
 
 		bool destroy{ false };
 		std::string tag;
+
+		std::shared_ptr<Texture> texture;
 
 		Transform transform;
 		Scene* scene{ nullptr };

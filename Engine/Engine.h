@@ -2,6 +2,7 @@
 
 //core
 #include "Core/FileSystem.h"
+#include "Core/Timer.h"
 
 //Framework
 #include "Framework/EventSystem.h"
@@ -18,16 +19,20 @@
 #include "Math/MathUtils.h"
 #include "Math/Transform.h"
 
+//STD
 #include <vector>
-#include <variant>
 #include <algorithm>
 #include <memory>
+
+//Input
+#include "Input/InputSystem.h"
 
 //resource
 #include "Resource/ResourceSystem.h"
 
 //objects
 #include "Object/Actor.h"
+#include "Object/Object.h"
 #include "Object/Scene.h"
 
 namespace MAC {
@@ -36,11 +41,14 @@ namespace MAC {
 		void Startup();
 		void Shutdown();
 
-		void Update(float dt);
+		void Update();
 		void Draw();
 
 		template<typename T>
 		T* Get();
+
+	public:
+		FrameTimer time;
 
 	private:
 		std::vector<std::unique_ptr<System>> systems;

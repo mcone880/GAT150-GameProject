@@ -29,7 +29,7 @@ namespace MAC {
 			SDL_Quit();
 		}
 
-		renderer = SDL_CreateRenderer(window, -1, 0);
+		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
 	}
 
 	void Renderer::BeginFrame() {
@@ -40,9 +40,20 @@ namespace MAC {
 		SDL_RenderPresent(renderer);
 	}
 
-	void Renderer::Draw(std::shared_ptr<MAC::Texture> texture, const Vector2& position) {
+	void Renderer::Draw(std::shared_ptr<MAC::Texture> texture, const Vector2& position, float angle, const Vector2& scale) {
 
-		SDL_Rect dest{ (int)position.x, (int)position.y, 64, 96 };
-		SDL_RenderCopy(renderer, texture->texture, nullptr, &dest);
+		Vector2 size = texture->GetSize();
+		size = size * scale;
+		SDL_Rect dest{ (int)position.x, (int)position.y, static_cast<int>(size.x),static_cast<int>(size.y) };
+
+		SDL_RenderCopyEx(renderer, texture->texture, nullptr, &dest, angle, nullptr, SDL_FLIP_NONE);
+	}
+
+	void Renderer::Draw(std::shared_ptr<MAC::Texture> texture, const Transform& transform) {
+		Vector2 size = texture->GetSize();
+		size = size * transform.scale;
+		SDL_Rect dest{ (int)transform.position.x, (int)transform.position.y, static_cast<int>(size.x),static_cast<int>(size.y) };
+
+		SDL_RenderCopyEx(renderer, texture->texture, nullptr, &dest, transform.rotation, nullptr, SDL_FLIP_NONE);
 	}
 }

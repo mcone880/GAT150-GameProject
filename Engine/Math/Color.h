@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "SDL.h"
 
 
 namespace MAC {
@@ -15,6 +16,17 @@ namespace MAC {
 			r = (rgb & 0xFF) / 255.0f;		   // 0 - 255 -> 0 - 1
 			g = ((rgb >> 8) & 0xFF) / 255.0f;  // 0 - 255 -> 0 - 1
 			b = ((rgb >> 16) & 0xFF) / 255.0f; // 0 - 255 -> 0 - 1
+		}
+
+		operator SDL_Color() const
+		{
+			SDL_Color color;
+			color.r = static_cast<Uint8>(r * 255);
+			color.g = static_cast<Uint8>(g * 255);
+			color.b = static_cast<Uint8>(g * 255);
+			color.a = 255;
+
+			return color;
 		}
 
 		Color operator + (const Color& color) const { return { r + color.r, g + color.g, b + color.b }; }

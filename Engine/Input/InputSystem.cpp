@@ -26,9 +26,16 @@ namespace MAC {
 		const Uint8* keyboardStateSDL = SDL_GetKeyboardState(nullptr);
 		std::copy(keyboardStateSDL + 0, keyboardStateSDL + numKeys, keyboardState.begin());
 
+		prevMouseButtonState = mouseButtonState;
+		int x, y;
+		Uint32 buttons = SDL_GetMouseState(&x, &y);
+		mousePosition = MAC::Vector2 { x,y };
+		mouseButtonState[0] = buttons & SDL_BUTTON_LMASK;
+		mouseButtonState[1] = buttons & SDL_BUTTON_MMASK;
+		mouseButtonState[2] = buttons & SDL_BUTTON_RMASK;
 	}
 
-	MAC::InputSystem::eKeyState InputSystem::GetKeyState(int id) {
+	InputSystem::eKeyState InputSystem::GetKeyState(int id) {
 		eKeyState state = eKeyState::Idle;
 
 		bool keyDown = IsKeyDown(id);
@@ -43,11 +50,19 @@ namespace MAC {
 		return state;
 	}
 
-	bool InputSystem::IsKeyDown(int id) {
-		return keyboardState[id];
-	}
+	InputSystem::eKeyState InputSystem::GetButtonState(int id)
+	{
+		eKeyState state = eKeyState::Idle;
 
-	bool InputSystem::IsPreviousKeyDown(int id) { 
-		return prevKeyboardState[id];
+		bool keyDown = IsButtonDown(id);
+		bool prevKeyDown = IsPreviousButtonDown(id);
+
+		if (keyDown) {
+			state = (prevKeyDown) ? eKeyState::Held : eKeyState::Pressed;
+		}
+		else {
+			state = (prevKeyDown) ? eKeyState::Release : eKeyState::Idle;
+		}
+		return state;
 	}
 }

@@ -1,8 +1,12 @@
 #pragma once
 
+//Audio
+#include "Audio/AudioSystem.h"
+
 //core
 #include "Core/FileSystem.h"
 #include "Core/Timer.h"
+#include "Core/Utilities.h"
 
 //Framework
 #include "Framework/EventSystem.h"
@@ -11,6 +15,8 @@
 //Graphics
 #include "Graphics/Renderer.h"
 #include "Graphics/Texture.h"
+#include "Graphics/ParticleSystem.h"
+#include "Graphics/Font.h"
 
 //Math
 #include "Math/Vector2.h"
@@ -42,7 +48,7 @@ namespace MAC {
 		void Shutdown();
 
 		void Update();
-		void Draw();
+		void Draw(Renderer* renderer);
 
 		template<typename T>
 		T* Get();

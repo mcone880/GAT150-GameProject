@@ -11,6 +11,6 @@ namespace MAC {
 
 	class GraphicSystem : public System {
 	public:
-		virtual void Draw() = 0;
+		virtual void Draw(class Renderer* renderer) = 0;
 	};
 }

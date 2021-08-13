@@ -89,6 +89,12 @@
     <ClCompile Include="Core\Utilities.cpp">
       <Filter>Sources\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>Sources\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Projectile.cpp">
+      <Filter>Sources\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\EventSystem.h">
@@ -165,6 +171,12 @@
     </ClInclude>
     <ClInclude Include="Core\Utilities.h">
       <Filter>Sources\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player.h">
+      <Filter>Sources\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Projectile.h">
+      <Filter>Sources\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

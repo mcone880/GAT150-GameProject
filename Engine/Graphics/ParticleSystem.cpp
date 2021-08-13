@@ -48,7 +48,7 @@ namespace MAC {
 		}
 	}
 
-	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, const std::vector<Color>& colors, float speed, float angle, float angleRange) {
+	void ParticleSystem::Create(const Vector2& position, size_t count, float lifetime, std::shared_ptr<Texture> texture, float speed, float angle, float angleRange) {
 		for (size_t i = 0; i < count; i++) {
 			auto particle = std::find_if(particles.begin(), particles.end(), Particle::IsNotActive);
 			if (particle != particles.end()) {
@@ -56,6 +56,7 @@ namespace MAC {
 				particle->lifetime = lifetime;
 				particle->position = position;
 				particle->prevPosition = position;
+				particle->texture = texture;
 
 				particle->velocity = (MAC::Vector2::Rotate(MAC::Vector2::right, angle) + angle + MAC::RandomRange(-angleRange, angleRange)) * (speed * Random());
 			}

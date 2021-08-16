@@ -147,6 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actors\Enemy.cpp" />
+    <ClCompile Include="Actors\Pickup.cpp" />
+    <ClCompile Include="Actors\Player.cpp" />
+    <ClCompile Include="Actors\Projectile.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -156,6 +160,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actors\Enemy.h" />
+    <ClInclude Include="Actors\Pickup.h" />
+    <ClInclude Include="Actors\Player.h" />
+    <ClInclude Include="Actors\Projectile.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

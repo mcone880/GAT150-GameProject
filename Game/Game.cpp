@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "Object/Player.h"
+#include "Object/Enemy.h"
+#include "Object/Pickup.h"
 
 void Game::Initialize() {
 
@@ -12,6 +14,7 @@ void Game::Initialize() {
 	scene = std::make_unique<MAC::Scene>();
 	scene->engine = engine.get();
 
+	MAC::SeedRandom(static_cast<unsigned int>(time(nullptr)));
 	MAC::SetFilePath("../Resources");
 
 	//Add Audio From Files
@@ -53,9 +56,9 @@ void Game::Update() {
 		state = eState::Game;
 		break;
 	case Game::eState::Game:
-		/*if (scene->GetActors<Enemy>().size() == 0) {
+		if (scene->GetActors<Enemy>().size() == 0) {
 			state = eState::StartLevel2;
-		}*/
+		}
 		break;
 	case Game::eState::StartLevel2:
 		scene->RemoveAllActors();
@@ -63,9 +66,9 @@ void Game::Update() {
 		state = eState::Game2;
 		break;
 	case Game::eState::Game2:
-		/*if (scene->GetActors<Enemy>().size() == 0) {
+		if (scene->GetActors<Enemy>().size() == 0) {
 			state = eState::YouWin;
-		}*/
+		}
 		break;
 	case Game::eState::YouWin:
 
@@ -246,28 +249,34 @@ void Game::Draw() {
 void Game::UpdateStartLevel(float dt) {
 
 	std::shared_ptr<MAC::Texture> texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Ship.png", engine->Get<MAC::Renderer>());
+	std::shared_ptr<MAC::Texture> enemyTexture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/EShip.png", engine->Get<MAC::Renderer>());
+	std::shared_ptr<MAC::Texture> pickupTexture = scene->engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Times3.png", scene->engine->Get<MAC::Renderer>());
+
 	scene->AddActor(std::make_unique<Player>(MAC::Transform{ MAC::Vector2{400.0f,300.0f}, 0.0f, 1.5f }, texture, 300.0f));
 
-	//for (size_t i = 0; i < 2; i++) {
-		//scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 2.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("Enemy.txt"), 300.0f, true));
-	//}
-	//scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 2.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("Enemy.txt"), 300.0f, false));
-	//scene->AddActor(std::make_unique<Pickup>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 2.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("Pickup.txt")));*/
+	for (size_t i = 0; i < 2; i++) {
+		scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 0.5f }, enemyTexture, 300.0f, true));
+	}
+	scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 0.5f }, enemyTexture, 300.0f, false));
+	scene->AddActor(std::make_unique<Pickup>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 0.5f }, pickupTexture));
 }
 
 void Game::UpdateLevel2(float dt) {
+	std::shared_ptr<MAC::Texture> texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Ship.png", engine->Get<MAC::Renderer>());
+	std::shared_ptr<MAC::Texture> enemyTexture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/EShip.png", engine->Get<MAC::Renderer>());
+	std::shared_ptr<MAC::Texture> pickupTexture = scene->engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Times3.png", scene->engine->Get<MAC::Renderer>());
 
-	/*scene->AddActor(std::make_unique<Player>(MAC::Transform{ MAC::Vector2{400.0f,300.0f}, 0.0f, 3.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("shape.txt"), 300.0f));
+	scene->AddActor(std::make_unique<Player>(MAC::Transform{ MAC::Vector2{400.0f,300.0f}, 0.0f, 1.5f }, texture, 300.0f));
 
 	for (size_t i = 0; i < 2; i++) {
-		scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 2.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("Enemy.txt"), 300.0f, true));
+		scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi),0.5f }, enemyTexture, 300.0f, true));
 	}
 	for (size_t i = 0; i < 2; i++) {
-		scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 2.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("Enemy.txt"), 300.0f, false));
+		scene->AddActor(std::make_unique<Enemy>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 0.5f },enemyTexture, 300.0f, false));
 	}
 	for (size_t i = 0; i < 2; i++) {
-		scene->AddActor(std::make_unique<Pickup>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 2.0f }, engine->Get<MAC::ResourceSystem>()->Get<MAC::Shape>("Pickup.txt")));
-	}*/
+		scene->AddActor(std::make_unique<Pickup>(MAC::Transform{ MAC::Vector2{MAC::RandomRange(0.0f,800.0f),MAC::RandomRange(0.0f,600.0f)}, MAC::RandomRange(0.0f,MAC::TwoPi), 0.5f }, pickupTexture));
+	}
 }
 
 void Game::OnAddPoints(const MAC::Event& event) {

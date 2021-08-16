@@ -9,6 +9,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Sources\Actors">
+      <UniqueIdentifier>{1748cf7b-fc2e-4e95-94e3-05c631aa05bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -17,10 +20,34 @@
     <ClCompile Include="Game.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Actors\Enemy.cpp">
+      <Filter>Sources\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Actors\Pickup.cpp">
+      <Filter>Sources\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Actors\Player.cpp">
+      <Filter>Sources\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Actors\Projectile.cpp">
+      <Filter>Sources\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
       <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors\Enemy.h">
+      <Filter>Sources\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors\Pickup.h">
+      <Filter>Sources\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors\Player.h">
+      <Filter>Sources\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors\Projectile.h">
+      <Filter>Sources\Actors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Projectile.h"
 #include "Engine.h"
-//#include "Enemy.h"
+#include "Enemy.h"
 #include <memory>
 
 Player::Player(const MAC::Transform& transform, std::shared_ptr<MAC::Texture> texture, float speed) : MAC::Actor{ transform, texture }, speed{ speed } {}
@@ -79,9 +79,11 @@ void Player::OnCollision(Actor* actor) {
 		return;
 	}
 
-	/*if (dynamic_cast<Enemy*>(actor)) {
+	std::shared_ptr<MAC::Texture> deathTexture = scene->engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/particle01.png", scene->engine->Get<MAC::Renderer>());
+
+	if (dynamic_cast<Enemy*>(actor)) {
 		destroy = true;
-		scene->engine->Get<MAC::ParticleSystem>()->Create(transform.position, 200, 1, MAC::Color::red, 50);
+		scene->engine->Get<MAC::ParticleSystem>()->Create(transform.position, 200, 1, deathTexture, 50);
 		scene->engine->Get<MAC::AudioSystem>()->PlayAudio("explosion");
 
 		MAC::Event event;
@@ -94,7 +96,7 @@ void Player::OnCollision(Actor* actor) {
 	if (dynamic_cast<Projectile*>(actor) && actor->tag == "Enemy") {
 		
 		actor->destroy = true;
-		scene->engine->Get<MAC::ParticleSystem>()->Create(transform.position, 200, 1, MAC::Color::red, 50);
+		scene->engine->Get<MAC::ParticleSystem>()->Create(transform.position, 200, 1, deathTexture, 50);
 		scene->engine->Get<MAC::AudioSystem>()->PlayAudio("explosion");
 
 		MAC::Event event;
@@ -103,5 +105,4 @@ void Player::OnCollision(Actor* actor) {
 		scene->engine->Get<MAC::EventSystem>()->Notify(event);
 		invincibilityTimer = 2;
 	}
-	*/
 }

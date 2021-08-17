@@ -41,6 +41,10 @@
 #include "Object/Object.h"
 #include "Object/Scene.h"
 
+//Components
+#include "Component/SpriteComponent.h"
+#include "Component/PhysicsComponent.h"
+
 namespace MAC {
 	class Engine {
 	public:

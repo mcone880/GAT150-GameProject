@@ -44,6 +44,7 @@
 //Components
 #include "Component/SpriteComponent.h"
 #include "Component/PhysicsComponent.h"
+#include "Component/SpriteAnimationComponent.h"
 
 namespace MAC {
 	class Engine {

@@ -15,18 +15,26 @@ void Game::Initialize() {
 	MAC::SetFilePath("../Resources");
 
 	//Actors
-	std::unique_ptr<MAC::Actor> actor = std::make_unique<MAC::Actor>(MAC::Transform{ MAC::Vector2{400,300} });
+	//std::unique_ptr<MAC::Actor> actor = std::make_unique<MAC::Actor>(MAC::Transform{ MAC::Vector2{400,300} });
+	//{
+	//	MAC::SpriteComponent* component = actor->AddComponent<MAC::SpriteComponent>();
+	//	component->texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Link.png", engine->Get<MAC::Renderer>());
+	//}
+	//{
+	//	MAC::PhysicsComponent* component = actor->AddComponent<MAC::PhysicsComponent>();
+	//	//component->ApplyForce(MAC::Vector2::right * 200);
+	//}
+
+	std::unique_ptr<MAC::Actor> actor = std::make_unique <MAC::Actor>(MAC::Transform{ MAC::Vector2{400, 300}, 0, 3 });
 	{
-		std::unique_ptr<MAC::SpriteComponent> component = std::make_unique<MAC::SpriteComponent>();
-		component->texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/sf2.png", engine->Get<MAC::Renderer>());
-		actor->AddComponent(std::move(component));
-	}
-	{
-		std::unique_ptr<MAC::PhysicsComponent> component = std::make_unique<MAC::PhysicsComponent>();
-		component->ApplyForce(MAC::Vector2::right * 200);
-		actor->AddComponent(std::move(component));
+		MAC::SpriteAnimationComponent* component = actor->AddComponent<MAC::SpriteAnimationComponent>();
+		component->texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Link.png", engine->Get<MAC::Renderer>());
+		component->fps = 30;
+		component->numFramesX = 12;
+		component->numFramesY = 8;
 	}
 	scene->AddActor(std::move(actor));
+
 }
 
 void Game::Shutdown() {

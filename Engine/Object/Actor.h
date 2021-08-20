@@ -28,6 +28,7 @@ namespace MAC {
 
 		float GetRadius();
 
+		void AddComponent(std::unique_ptr<Component> component);
 		template<class T>
 		T* AddComponent();
 
@@ -43,6 +44,8 @@ namespace MAC {
 
 		std::vector<std::unique_ptr<Component>> components;
 	};
+
+
 
 	template<class T>
 	inline T* Actor::AddComponent() {

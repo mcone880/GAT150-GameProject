@@ -193,5 +193,11 @@
     <ClInclude Include="Component\SpriteAnimationComponent.h">
       <Filter>Sources\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\Singleton.h">
+      <Filter>Sources\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Factory.h">
+      <Filter>Sources\Framework</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 namespace MAC {
 
 	class Object {
-
+	public:
+		virtual ~Object() {}
 	};
 }

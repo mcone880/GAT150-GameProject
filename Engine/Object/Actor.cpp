@@ -31,6 +31,11 @@ namespace MAC {
 		return 0;
 	}
 
+	void Actor::AddComponent(std::unique_ptr<Component> component) {
+		component->owner = this;
+		components.push_back(std::move(component));
+	}
+
 	void Actor::AddChild(std::unique_ptr<Actor> actor) {
 		actor->parent = this;
 		children.push_back(std::move(actor));

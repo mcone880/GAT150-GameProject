@@ -18,6 +18,9 @@ namespace MAC {
 			b = ((rgb >> 16) & 0xFF) / 255.0f; // 0 - 255 -> 0 - 1
 		}
 
+		float operator [] (size_t index) const { return (&r)[index]; }
+		float& operator [] (size_t index) { return (&r)[index]; }
+
 		operator SDL_Color() const
 		{
 			SDL_Color color;
@@ -43,6 +46,7 @@ namespace MAC {
 		}
 
 		friend std::istream& operator >> (std::istream& stream, Color& c);
+		friend std::ostream& operator << (std::ostream& stream, Color& c);
 
 		static const Color white;
 		static const Color red;

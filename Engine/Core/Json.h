@@ -4,6 +4,8 @@
 #include "Math/Vector2.h"
 #include <string>
 
+#define JSON_READ(value, data) MAC::json::Get(value, #data, data);
+
 namespace MAC {
 	namespace json
 	{
@@ -14,6 +16,5 @@ namespace MAC {
 		bool Get(const rapidjson::Value& value, const std::string& name, std::string& data);
 		bool Get(const rapidjson::Value& value, const std::string& name, MAC::Vector2& data);
 		bool Get(const rapidjson::Value& value, const std::string& name, MAC::Color& data);
-
 	}
 }

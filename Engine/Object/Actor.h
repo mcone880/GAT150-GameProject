@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "Math/Transform.h"
 #include "Component/Component.h"
+#include "Core/Serializable.h"
 #include <vector>
 #include <memory>
 
@@ -12,7 +13,7 @@ namespace MAC {
 	class Texture;
 	class Renderer;
 
-	class Actor : public Object {
+	class Actor : public Object, public ISerializable {
 	public:
 
 		Actor() {}
@@ -32,6 +33,9 @@ namespace MAC {
 		template<class T>
 		T* AddComponent();
 
+		virtual bool Write(const rapidjson::Value& value) const override;
+		virtual bool Read(const rapidjson::Value& value) override;
+
 	public:
 		bool destroy{ false };
 		std::string tag;
@@ -44,8 +48,6 @@ namespace MAC {
 
 		std::vector<std::unique_ptr<Component>> components;
 	};
-
-
 
 	template<class T>
 	inline T* Actor::AddComponent() {

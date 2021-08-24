@@ -14,6 +14,11 @@ void Game::Initialize() {
 	MAC::SeedRandom(static_cast<unsigned int>(time(nullptr)));
 	MAC::SetFilePath("../Resources");
 
+	rapidjson::Document document;
+	bool success = MAC::json::Load("Text/scene.txt", document);
+	assert(success);
+	scene->Read(document);
+
 	//Actors
 	//std::unique_ptr<MAC::Actor> actor = std::make_unique<MAC::Actor>(MAC::Transform{ MAC::Vector2{400,300} });
 	//{
@@ -27,18 +32,18 @@ void Game::Initialize() {
 	//	//component->ApplyForce(MAC::Vector2::right * 200);
 	//}
 
-	std::unique_ptr<MAC::Actor> actor = std::make_unique <MAC::Actor>(MAC::Transform{ MAC::Vector2{400, 300}, 0, 3 });
-	{
-		auto component = MAC::ObjectFactory::Instance().Create<MAC::SpriteAnimationComponent>("SpriteAnimationComponent");
-		component->texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Link.png", engine->Get<MAC::Renderer>());
+	//std::unique_ptr<MAC::Actor> actor = std::make_unique <MAC::Actor>(MAC::Transform{ MAC::Vector2{400, 300}, 0, 3 });
+	//{
+	//	auto component = MAC::ObjectFactory::Instance().Create<MAC::SpriteAnimationComponent>("SpriteAnimationComponent");
+	//	component->texture = engine->Get<MAC::ResourceSystem>()->Get<MAC::Texture>("Images/Link.png", engine->Get<MAC::Renderer>());
 
-		//MAC::SpriteAnimationComponent* component = actor->AddComponent<MAC::SpriteAnimationComponent>();
-		component->fps = 60;
-		component->numFramesX = 12;
-		component->numFramesY = 8;
-		actor->AddComponent(std::move(component));
-	}
-	scene->AddActor(std::move(actor));
+	//	//MAC::SpriteAnimationComponent* component = actor->AddComponent<MAC::SpriteAnimationComponent>();
+	//	component->fps = 60;
+	//	component->numFramesX = 12;
+	//	component->numFramesY = 8;
+	//	actor->AddComponent(std::move(component));
+	//}
+	//scene->AddActor(std::move(actor));
 
 }
 

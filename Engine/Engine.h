@@ -10,6 +10,7 @@
 #include "Core/Timer.h"
 #include "Core/Utilities.h"
 #include "Core/Json.h"
+#include "Core/Serializable.h"
 
 //Framework
 #include "Framework/EventSystem.h"

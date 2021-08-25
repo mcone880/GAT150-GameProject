@@ -9,6 +9,7 @@ namespace MAC {
 		systems.push_back(std::make_unique<InputSystem>());
 		systems.push_back(std::make_unique<Renderer>());
 		systems.push_back(std::make_unique<ResourceSystem>());
+		systems.push_back(std::make_unique<PhysicsSystem>());
 
 		std::for_each(systems.begin(), systems.end(), [](auto& system) { system->Startup(); });
 
@@ -16,6 +17,7 @@ namespace MAC {
 		REGISTER_CLASS(SpriteComponent);
 		REGISTER_CLASS(SpriteAnimationComponent);
 		REGISTER_CLASS(PhysicsComponent);
+		REGISTER_CLASS(RBPhysicsComponent);
 	}
 
 	void Engine::Shutdown() {

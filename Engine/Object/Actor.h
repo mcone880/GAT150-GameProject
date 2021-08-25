@@ -33,6 +33,9 @@ namespace MAC {
 		template<class T>
 		T* AddComponent();
 
+		template<class T>
+		T* GetComponent();
+
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
 
@@ -56,5 +59,13 @@ namespace MAC {
 		components.push_back(std::move(component));
 
 		return dynamic_cast<T*>(components.back().get());
+	}
+
+	template<class T>
+	inline T* Actor::GetComponent() {
+		for (auto& component : components) {
+			if (dynamic_cast<T*>(component.get())) return dynamic_cast<T*>(component.get());
+		}
+		return nullptr;
 	}
 }

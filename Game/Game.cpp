@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GameComponent/PlayerComponent.h"
 
 void Game::Initialize() {
 
@@ -6,6 +7,9 @@ void Game::Initialize() {
 	engine = std::make_unique<MAC::Engine>();
 	engine->Startup();
 	engine->Get<MAC::Renderer>()->Create("GAT150", 800, 600);
+
+	//Register Classes
+	REGISTER_CLASS(PlayerComponent);
 
 	//Scene
 	scene = std::make_unique<MAC::Scene>();

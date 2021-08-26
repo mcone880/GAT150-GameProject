@@ -42,6 +42,7 @@ namespace MAC {
 	public:
 		bool destroy{ false };
 		std::string tag;
+		std::string name;
 
 		Transform transform;
 		Scene* scene{ nullptr };

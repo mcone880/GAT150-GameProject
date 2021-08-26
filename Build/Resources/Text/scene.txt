@@ -3,35 +3,108 @@
 	      {
 			"type":"Actor",
 			"tag":"Player",
+			"name":"Player",
 			"transform":{
 				"position": [
 					400,
 					300
+				],
+				"scale": [
+					2,
+					2
 				],
 				"rotation":0
 			},
 			"components":[
 				{
 					"type":"PlayerComponent",
-					"speed":150
+					"speed":50
 				},
 				{
-					"type":"SpriteComponent",
-					"textureName":"Images/sf2.png"
+					"type":"AudioComponent",
+					"soundName":"Audio/grunt.wav",
+					"playOnAwake":true
 				},
 				{
 					"type":"RBPhysicsComponent",
 					"data.isDynamic":true,
 					"data.density":1,
-					"data.size": [64,96],
-					"data.lockAngle":true
+					"data.size": [32,32],
+					"data.lockAngle":true,
+					"data.restitution":1,
+					"data.gravityScale":1
 				},
 				{
 					"type":"SpriteAnimationComponent",
-					"textureName":"Images/Link.png",
-					"fps":60,
-					"numFramesX":12,
-					"numFramesY":8
+					"textureName":"Images/characters.png",
+					"fps":10,
+					"numFramesX":18,
+					"numFramesY":11,
+					"startFrame":90,
+					"endFrame":95
+				}
+			]
+	      },
+		  {
+			"type":"Actor",
+			"name":"Score",
+			"transform":{
+				"position":[
+					60,
+					20
+				]
+			},
+			"components":[
+				{
+					"type":"TextComponent",
+					"fontName":"Fonts/ZeldaFont.otf",
+					"fontSize":16,
+					"color":[
+						1,
+						1,
+						1
+					],
+					"text":"Hello World!"
+				}
+			]
+		  },
+		  {
+			"type":"Actor",
+			"tag":"Enemy",
+			"transform":{
+				"position": [
+					500,
+					200
+				],
+				"scale": [
+					2,
+					2
+				],
+				"rotation":0
+			},
+			"components":[
+				{
+					"type":"EnemyComponent",
+					"speed":10
+				},
+				{
+					"type":"RBPhysicsComponent",
+					"data.isDynamic":true,
+					"data.isSensor":true,
+					"data.density":1,
+					"data.size": [32,32],
+					"data.lockAngle":true,
+					"data.restitution":1,
+					"data.gravityScale":0
+				},
+				{
+					"type":"SpriteAnimationComponent",
+					"textureName":"Images/bat.png",
+					"fps":10,
+					"numFramesX":4,
+					"numFramesY":1,
+					"startFrame":2,
+					"endFrame":4
 				}
 			]
 	      },

@@ -113,6 +113,12 @@
     <ClCompile Include="Physics\PhysicsSystem.cpp">
       <Filter>Sources\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Component\AudioComponent.cpp">
+      <Filter>Sources\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\TextComponent.cpp">
+      <Filter>Sources\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\EventSystem.h">
@@ -222,6 +228,12 @@
     </ClInclude>
     <ClInclude Include="Physics\PhysicsSystem.h">
       <Filter>Sources\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\AudioComponent.h">
+      <Filter>Sources\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\TextComponent.h">
+      <Filter>Sources\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

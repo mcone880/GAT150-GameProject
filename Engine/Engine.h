@@ -55,6 +55,8 @@
 #include "Component/PhysicsComponent.h"
 #include "Component/SpriteAnimationComponent.h"
 #include "Component/RBPhysicsComponent.h"
+#include "Component/AudioComponent.h"
+#include "Component/TextComponent.h"
 
 namespace MAC {
 	using ObjectFactory = Singleton<Factory<std::string, Object>>;

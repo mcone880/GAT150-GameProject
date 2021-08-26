@@ -5,6 +5,8 @@ namespace MAC {
 	void RBPhysicsComponent::Update() {
 		if (!body) {
 			body = owner->scene->engine->Get<PhysicsSystem>()->CreateBody(owner->transform.position, owner->transform.rotation, data, owner);
+			body->SetGravityScale(data.gravityScale);
+			body->SetLinearDamping(1);
 		}
 
 		owner->transform.position = PhysicsSystem::WorldToScreen(body->GetPosition());
@@ -31,7 +33,7 @@ namespace MAC {
 		JSON_READ(value, data.friction);
 		JSON_READ(value, data.restitution);
 		JSON_READ(value, data.gravityScale);
-
+		
 		return true;
 	}
 }

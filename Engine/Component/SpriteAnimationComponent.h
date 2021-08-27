@@ -1,12 +1,24 @@
 #pragma once
 #include "SpriteComponent.h"
 #include "SDL.h"
+#include <map>
 
 namespace MAC {
 	class SpriteAnimationComponent : public SpriteComponent {
+	private:
+		struct Sequence {
+			int fps{ 0 };
+			int startFrame{ 0 };
+			int endFrame{ 0 };
+		};
+
+
+
 	public:
 		void Update() override;
 		void Draw(Renderer* renderer) override;
+
+		void StartSequence(const std::string& name);
 		
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
@@ -24,5 +36,8 @@ namespace MAC {
 		float frameTime{ 0 };
 
 		SDL_Rect rect;
+
+		std::map<std::string, Sequence> sequences;
+		std::string sequenceName;
 	};
 }

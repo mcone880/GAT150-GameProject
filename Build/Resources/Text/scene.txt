@@ -18,7 +18,7 @@
 			"components":[
 				{
 					"type":"PlayerComponent",
-					"speed":50
+					"speed":25
 				},
 				{
 					"type":"AudioComponent",
@@ -31,7 +31,7 @@
 					"data.density":1,
 					"data.size": [32,32],
 					"data.lockAngle":true,
-					"data.restitution":1,
+					"data.restitution":0,
 					"data.gravityScale":1
 				},
 				{
@@ -41,7 +41,28 @@
 					"numFramesX":18,
 					"numFramesY":11,
 					"startFrame":90,
-					"endFrame":95
+					"endFrame":95,
+					"sequences":[
+						{
+							"name":"Idle",
+							"sequence.fps":4,
+							"sequence.startFrame":0,
+							"sequence.endFrame":1
+						},
+						{
+							"name":"WalkRight",
+							"sequence.fps":10,
+							"sequence.startFrame":90,
+							"sequence.endFrame":95
+						},
+						{
+							"name":"WalkLeft",
+							"sequence.fps":10,
+							"sequence.startFrame":162,
+							"sequence.endFrame":167
+						}
+					],
+					"defaultSequence":"Idle"
 				}
 			]
 	      },
@@ -103,8 +124,8 @@
 					"fps":10,
 					"numFramesX":4,
 					"numFramesY":1,
-					"startFrame":2,
-					"endFrame":4
+					"startFrame":1,
+					"endFrame":3
 				}
 			]
 	      },
@@ -127,7 +148,7 @@
 					"type":"RBPhysicsComponent",
 					"data.isDynamic":false,
 					"data.density":1,
-					"data.size": [500,20]
+					"data.size": [800,40]
 				}
 			]
 	      }

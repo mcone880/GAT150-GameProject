@@ -24,10 +24,10 @@ namespace MAC {
 		virtual void Update(float dt);
 		virtual void Draw(Renderer* renderer);
 
-		virtual void OnCollision(Actor* actor) {}
-		virtual void AddChild(std::unique_ptr<Actor> actor);
+		void BeginContact(Actor* other);
+		void EndContact(Actor* other);
 
-		float GetRadius();
+		virtual void AddChild(std::unique_ptr<Actor> actor);
 
 		void AddComponent(std::unique_ptr<Component> component);
 		template<class T>

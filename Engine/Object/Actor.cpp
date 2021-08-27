@@ -27,9 +27,22 @@ namespace MAC {
 		std::for_each(children.begin(), children.end(), [renderer](auto& child) { child->Draw(renderer); });
 	}
 
-	float Actor::GetRadius()
-	{
-		return 0;
+	void Actor::BeginContact(Actor* other) {
+		Event event;
+		event.name = "Collision_Enter";
+		event.data = other;
+		event.receiver = this;
+
+		scene->engine->Get<EventSystem>()->Notify(event);
+	}
+
+	void Actor::EndContact(Actor* other) {
+		Event event;
+		event.name = "Collision_Exit";
+		event.data = other;
+		event.receiver = this;
+
+		scene->engine->Get<EventSystem>()->Notify(event);
 	}
 
 	void Actor::AddComponent(std::unique_ptr<Component> component) {
@@ -57,6 +70,7 @@ namespace MAC {
 				if (component) {
 					component->owner = this;
 					component->Read(componentValue);
+					component->Create();
 					AddComponent(std::move(component));
 				}
 			}

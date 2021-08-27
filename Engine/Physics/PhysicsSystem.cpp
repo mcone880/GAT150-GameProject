@@ -1,32 +1,29 @@
 #include "PhysicsSystem.h"
 #include "Object/Actor.h"
 #include "Math/MathUtils.h"
+#include "ContactListener.h"
 
 const float MAC::PhysicsSystem::pixelsPerUnit = 48.0f;
 
 namespace MAC
 {
-    void PhysicsSystem::Startup()
-    {
+    void PhysicsSystem::Startup() {
         b2Vec2 gravity{ 0, 10 };
         world = std::make_unique<b2World>(gravity);
-        //contactListener = std::make_unique<ContactListener>();
-        //world->SetContactListener(contactListener.get());
+        contactListener = std::make_unique<ContactListener>();
+        world->SetContactListener(contactListener.get());
     }
 
-    void PhysicsSystem::Shutdown()
-    {
+    void PhysicsSystem::Shutdown() {
         //
     }
 
-    void PhysicsSystem::Update(float dt)
-    {
+    void PhysicsSystem::Update(float dt) {
         float timeStep = 1.0f / 60.0f;
         world->Step(timeStep, 8, 3);
     }
 
-    b2Body* PhysicsSystem::CreateBody(const Vector2& position, float angle, const RigidBodyData& data, Actor* actor)
-    {
+    b2Body* PhysicsSystem::CreateBody(const Vector2& position, float angle, const RigidBodyData& data, Actor* actor) {
         Vector2 worldPosition = ScreenToWorld(position);
 
         b2BodyDef bodyDef;
@@ -53,8 +50,7 @@ namespace MAC
         return body;
     }
 
-    void PhysicsSystem::DestroyBody(b2Body* body)
-    {
+    void PhysicsSystem::DestroyBody(b2Body* body) {
         world->DestroyBody(body);
     }
 }

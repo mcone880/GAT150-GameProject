@@ -10,7 +10,7 @@ namespace MAC {
 			frameTimer = 0;
 			frame++;
 
-			if (frame >= (endFrame)) frame = startFrame;
+			if (frame > (endFrame)) frame = startFrame;
 		}
 
 		Vector2 size = texture->GetSize();
@@ -27,6 +27,20 @@ namespace MAC {
 		renderer->Draw(texture, rect, owner->transform);
 	}
 
+	void SpriteAnimationComponent::StartSequence(const std::string& name) {
+		if (sequenceName == name) return;
+
+		sequenceName = name;
+		if (sequences.find(sequenceName) != sequences.end()) {
+			Sequence sequence = sequences[sequenceName];
+			startFrame = sequence.startFrame;
+			endFrame = sequence.endFrame;
+			fps = sequence.fps;
+
+			frame = startFrame;
+		}
+	}
+
 	bool SpriteAnimationComponent::Write(const rapidjson::Value& value) const {
 		return false;
 	}
@@ -39,9 +53,26 @@ namespace MAC {
 		JSON_READ(value, startFrame);
 		JSON_READ(value, endFrame);
 
-		if (startFrame == 0 && endFrame == 0) endFrame = numFramesX * numFramesY;
+		if (startFrame == 0 && endFrame == 0) endFrame = (numFramesX * numFramesY) - 1;
 		frame = startFrame;
 
+		if (value.HasMember("sequences") && value["sequences"].IsArray()) {
+			for (auto& sequenceValue : value["sequences"].GetArray()) {
+				std::string name;
+				JSON_READ(sequenceValue, name);
+
+				Sequence sequence;
+				JSON_READ(sequenceValue, sequence.fps);
+				JSON_READ(sequenceValue, sequence.startFrame);
+				JSON_READ(sequenceValue, sequence.endFrame);
+
+				sequences[name] = sequence;
+			}
+
+			std::string defaultSequence;
+			JSON_READ(value, defaultSequence);
+			StartSequence(defaultSequence);
+		}
 		return true;
 	}
 }

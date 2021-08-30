@@ -3,6 +3,11 @@
 
 using namespace MAC;
 
+PlayerComponent::~PlayerComponent() {
+		owner->scene->engine->Get<EventSystem>()->Unsubscribe("Collision_Enter", owner);
+		owner->scene->engine->Get<EventSystem>()->Unsubscribe("Collision_Exit", owner);
+}
+
 void PlayerComponent::Create() {
 	owner->scene->engine->Get<EventSystem>()->Subscribe("Collision_Enter", std::bind(&PlayerComponent::OnCollisionEnter, this, std::placeholders::_1), owner);
 	owner->scene->engine->Get<EventSystem>()->Subscribe("Collision_Exit", std::bind(&PlayerComponent::OnCollisionExit, this, std::placeholders::_1), owner);

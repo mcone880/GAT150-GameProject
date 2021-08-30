@@ -5,6 +5,19 @@
 #include <algorithm>
 
 namespace MAC {
+	Actor::Actor(const Actor& other) {
+		tag = other.tag;
+		name = other.name;
+		transform = other.transform;
+		scene = other.scene;
+
+		for (auto& component : other.components) {
+			auto clone = std::unique_ptr<Component>(dynamic_cast<Component*>(component->Clone().release()));
+			clone->owner = this;
+			clone->Create();
+			AddComponent(std::move(clone));
+		}
+	}
 
 	void Actor::Initialize() {
 
@@ -23,7 +36,6 @@ namespace MAC {
 				dynamic_cast<GraphicsComponent*>(component.get())->Draw(renderer);
 			}
 		});
-
 		std::for_each(children.begin(), children.end(), [renderer](auto& child) { child->Draw(renderer); });
 	}
 

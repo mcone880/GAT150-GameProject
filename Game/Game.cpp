@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "GameComponent/PlayerComponent.h"
+#include "GameComponent/PickupComponent.h"
 #include "GameComponent/EnemyComponent.h"
 
 void Game::Initialize() {
@@ -11,6 +12,7 @@ void Game::Initialize() {
 
 	//Register Classes
 	REGISTER_CLASS(PlayerComponent);
+	REGISTER_CLASS(PickupComponent);
 	REGISTER_CLASS(EnemyComponent);
 
 	//Scene
@@ -24,6 +26,12 @@ void Game::Initialize() {
 	bool success = MAC::json::Load("Text/scene.txt", document);
 	assert(success);
 	scene->Read(document);
+
+	for (int i = 0; i <= 10; i++) {
+		auto actor = MAC::ObjectFactory::Instance().Create<MAC::Actor>("Coin");
+		actor->transform.position = MAC::Vector2{ MAC::RandomRange(100,700), MAC::RandomRange(400,500) };
+		scene->AddActor(std::move(actor));
+	}
 
 	//Actors
 	//std::unique_ptr<MAC::Actor> actor = std::make_unique<MAC::Actor>(MAC::Transform{ MAC::Vector2{400,300} });

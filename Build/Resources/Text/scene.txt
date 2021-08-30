@@ -151,6 +151,38 @@
 					"data.size": [800,40]
 				}
 			]
-	      }
+	      },
+		  {
+			"type":"Actor",
+			"prototype":true,
+			"tag":"Pickup",
+			"name":"Coin",
+			"transform":{
+				"position":[
+					500,
+					450
+				]
+			},
+			"components":[
+				{
+					"type":"PickupComponent"
+				},
+				{
+					"type":"SpriteAnimationComponent",
+					"textureName":"Images/coin.png",
+					"fps":10,
+					"numFramesX":8,
+					"numFramesY":1,
+					"startFrame":0,
+					"endFrame":7
+				},
+				{
+					"type":"RBPhysicsComponent",
+					"data.isDynamic":false,
+					"data.isSensor":true,
+					"data.size": [32,32]
+				}
+			]
+		  }
 	]
 }
